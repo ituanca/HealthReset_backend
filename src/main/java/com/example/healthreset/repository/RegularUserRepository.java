@@ -1,0 +1,14 @@
+package com.example.healthreset.repository;
+
+import com.example.healthreset.model.RegularUser;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface RegularUserRepository extends JpaRepository<RegularUser,Integer> {
+
+    Optional<RegularUser> findByUsername(String username);
+
+    Optional<RegularUser> findByEmail(String email);
+
+}
