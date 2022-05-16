@@ -1,11 +1,16 @@
 package com.example.healthreset.controller;
 
+import com.example.healthreset.model.dto.ProfileDTO;
 import com.example.healthreset.model.dto.UserDTO;
 import com.example.healthreset.service.RegularUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -31,5 +36,11 @@ public class RegularUserController {
         log.info(" username sent from frontend: " + username);
         return regularUserService.login(username, password);
     } // used
+
+    @GetMapping("/findProfileByRegularUser")
+    public ProfileDTO findProfileByRegularUser(@Param("username") String username){
+        log.info(" username sent from frontend: " + username);
+        return regularUserService.findProfileByRegularUser(username);
+    }
 
 }

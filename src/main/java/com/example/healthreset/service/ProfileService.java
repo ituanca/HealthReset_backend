@@ -6,15 +6,13 @@ import com.example.healthreset.model.RegularUser;
 import com.example.healthreset.model.dto.ProfileDTO;
 import com.example.healthreset.repository.ActivityLevelRepository;
 import com.example.healthreset.repository.ProfileRepository;
+import com.example.healthreset.repository.RegularUserRepository;
 import com.example.healthreset.utils.ProfileMapper;
 import com.example.healthreset.utils.UsersMapper;
+import com.example.healthreset.utils.validation.ProfileValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Slf4j
 @Service
@@ -22,50 +20,67 @@ public class ProfileService {
 
     private final ProfileRepository profileRepository;
     private final ActivityLevelRepository activityLevelRepository;
+    private final RegularUserRepository regularUserRepository;
 
     @Autowired
-    public ProfileService(ProfileRepository profileRepository, ActivityLevelRepository activityLevelRepository) {
+    public ProfileService(ProfileRepository profileRepository, ActivityLevelRepository activityLevelRepository, RegularUserRepository regularUserRepository) {
         this.profileRepository = profileRepository;
         this.activityLevelRepository = activityLevelRepository;
+        this.regularUserRepository = regularUserRepository;
     }
 
     public String createProfile(ProfileDTO profileDTO) {
-
         String activityLevelString = profileDTO.getActivityLevel();
         ActivityLevel activityLevel =
                 activityLevelRepository.findByActivityLevel(activityLevelString).orElse(null);
-
-        if(activityLevel!=null){
-            log.warn(" activityLevel: " + activityLevel.getActivityLevel());
-        }
 
         UsersMapper usersMapper = new UsersMapper();
         RegularUser regularUser = usersMapper.convertDTOtoRegularUser(profileDTO.getRegularUser());
 
         ProfileMapper profileMapper = new ProfileMapper();
         Profile profile = profileMapper.convertDTOtoProfile(profileDTO);
+
         profile.setActivityLevel(activityLevel);
         profile.setRegularUser(regularUser);
 
-        if(profile.getWeight() < 0){
-            log.warn(" Weight " + profile.getWeight() + " is not a valid weight!");
-            return "invalid_weight";
-        }else if(profile.getHeight() < 0){
-            log.warn(" Height " + profile.getHeight() + " is not a valid height!");
-            return "invalid_height";
-        }else if(profile.getBirthDate().isAfter(LocalDate.now())){
-            log.warn(" Birthdate " + profile.getBirthDate() + " is not a valid birthDate!");
-            return "invalid_birthdate";
-        }else if(profile.getWeightGoal() < 0){
-            log.warn(" Weight goal " + profile.getHeight() + " is not a valid weight goal!");
-            return "invalid_weightGoal";
-        }else if(profile.getNrOfStepsGoal() < 0){
-            log.warn(" Number of steps goal " + profile.getNrOfStepsGoal() + " is not a number of steps goal!");
-            return "invalid_nrOfStepsGoal";
+        ProfileValidator profileValidator = new ProfileValidator();
+        String result = profileValidator.validate(profile);
+
+        if(result.equals("ok")){
+            profileRepository.save(profile);
+            log.info(" Profile created!");
         }
-        profileRepository.save(profile);
-        log.info(" Profile created!");
-        return "ok";
+        return result;
+    }
+
+    public String updateProfile(ProfileDTO profileDTO){
+        String activityLevelString = profileDTO.getActivityLevel();
+        ActivityLevel activityLevel =
+                activityLevelRepository.findByActivityLevel(activityLevelString).orElse(null);
+
+        ProfileMapper profileMapper = new ProfileMapper();
+        Profile updatedProfile = profileMapper.convertDTOtoProfile(profileDTO);
+
+        updatedProfile.setActivityLevel(activityLevel);
+
+        ProfileValidator profileValidator = new ProfileValidator();
+        String result = profileValidator.validate(updatedProfile);
+
+       if(result.equals("ok")){
+           profileRepository.findById(profileDTO.getId())
+                   .map(profile -> {
+                       profile.setWeight(updatedProfile.getWeight());
+                       profile.setHeight(updatedProfile.getHeight());
+                       profile.setBirthDate(updatedProfile.getBirthDate());
+                       profile.setActivityLevel(updatedProfile.getActivityLevel());
+                       profile.setWeightGoal(updatedProfile.getWeightGoal());
+                       profile.setNrOfStepsGoal(updatedProfile.getNrOfStepsGoal());
+                       return profileRepository.save(profile);
+                   })
+                   .orElseGet(() -> null);
+           log.info(" Profile updated!");
+       }
+       return result;
     }
 
 }

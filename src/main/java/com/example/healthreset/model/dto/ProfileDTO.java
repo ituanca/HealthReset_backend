@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 public class ProfileDTO {
 
+    Integer id;
     Double weight;
     Double height;
     String birthdate;

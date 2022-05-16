@@ -30,20 +30,21 @@ public class AdminController {
 
     @GetMapping("/{id}")
     public Optional<Admin> findById(@PathVariable Integer id){
-        log.info("AdminController:findById " + " id entered: " + id);
+        log.info(" id entered: " + id);
         return adminService.findById(id);
     }
 
     @PostMapping(path = "/signUp", consumes = {"application/json"})
     public String signUp(@RequestBody UserDTO userDTO) {
-        log.info("AdminController:signUp " + " email entered: " + userDTO.getEmail());
-        log.info("AdminController:signUp " + " username entered: " + userDTO.getUsername());
+        log.info(" email entered: " + userDTO.getEmail());
+        log.info(" username entered: " + userDTO.getUsername());
         return adminService.signUp(userDTO);
     } // used
 
     @GetMapping("/login")
     public String login(@Param("username") String username, @Param("password") String password){
-        log.info("AdminController:login " + " username sent from frontend: " + username);
+        log.info(" username sent from frontend: " + username);
         return adminService.login(username, password);
     } // used
+
 }

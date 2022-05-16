@@ -1,8 +1,10 @@
 package com.example.healthreset.service;
 
 import com.example.healthreset.model.RegularUser;
+import com.example.healthreset.model.dto.ProfileDTO;
 import com.example.healthreset.model.dto.UserDTO;
 import com.example.healthreset.repository.RegularUserRepository;
+import com.example.healthreset.utils.ProfileMapper;
 import com.example.healthreset.utils.UsersMapper;
 import com.example.healthreset.utils.validation.EmailValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Slf4j
@@ -54,6 +57,19 @@ public class RegularUserService {
         }
         log.info(" Credentials are valid, regularUser successfully logged in!");
         return "ok";
+    }
+
+    public ProfileDTO findProfileByRegularUser(String username){
+        RegularUser regularUser = regularUserRepository.findByUsername(username).orElse(null);
+        if(regularUser!=null){
+            if(regularUser.getProfile() != null){
+                log.info(" Profile associated to regularUser " + username + " was found!");
+                ProfileMapper profileMapper = new ProfileMapper();
+                return profileMapper.convertProfileToDTO(regularUser.getProfile());
+            }
+        }
+        log.warn(" Profile associated to regularUser " + username + " not found!");
+        return null;
     }
 
 }

@@ -3,10 +3,10 @@ package com.example.healthreset.controller;
 import com.example.healthreset.model.dto.ProfileDTO;
 import com.example.healthreset.service.ProfileService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
 
@@ -32,6 +32,19 @@ public class ProfileController {
                 profileDTO.getWeightGoal() + " " +
                 profileDTO.getNrOfStepsGoal());
         return profileService.createProfile(profileDTO);
+    }
+
+    @PutMapping(value = "/update", consumes = {"application/json"})
+    public String updateProfile( @RequestBody ProfileDTO profileDTO){
+        log.info(" data entered: " +
+                profileDTO.getRegularUser().getUsername() + " " +
+                profileDTO.getWeight() + " " +
+                profileDTO.getHeight() + " " +
+                profileDTO.getBirthdate() + " " +
+                profileDTO.getActivityLevel() + " " +
+                profileDTO.getWeightGoal() + " " +
+                profileDTO.getNrOfStepsGoal());
+        return profileService.updateProfile(profileDTO);
     }
 
 }
