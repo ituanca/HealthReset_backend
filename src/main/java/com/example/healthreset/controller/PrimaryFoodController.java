@@ -14,6 +14,7 @@ import java.net.URISyntaxException;
 @RestController
 @RequestMapping(path="/primaryFood")
 public class PrimaryFoodController {
+
     private final PrimaryFoodService primaryFoodService;
 
     public PrimaryFoodController(PrimaryFoodService primaryFoodService) {

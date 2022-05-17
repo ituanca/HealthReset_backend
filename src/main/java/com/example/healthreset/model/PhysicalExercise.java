@@ -1,10 +1,15 @@
 package com.example.healthreset.model;
 
-import com.example.healthreset.model.enumClasses.TypeOfExercise;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "physicalExercise")
 public class PhysicalExercise {
@@ -16,7 +21,11 @@ public class PhysicalExercise {
     @Column
     String name;
 
-    @Enumerated(EnumType.STRING)
+    @Column
+    Integer caloriesBurnedPerMinute;
+
+    @ManyToOne
+    @JoinColumn(name = "idTypeOfExercise")
     TypeOfExercise typeOfExercise;
 
     @ManyToMany(mappedBy="listOfPhysicalExercises")

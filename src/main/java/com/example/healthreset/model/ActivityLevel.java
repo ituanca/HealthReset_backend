@@ -17,7 +17,7 @@ public class ActivityLevel {
     @GeneratedValue(strategy = GenerationType.AUTO)  // the field is auto-generated and it will not be provided by the user
     private Integer id;
 
-    @Column // the field is auto-generated and it will not be provided by the user
+    @Column
     private String activityLevel;
 
     @OneToMany(mappedBy = "activityLevel")
