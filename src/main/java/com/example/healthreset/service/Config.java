@@ -1,8 +1,10 @@
 package com.example.healthreset.service;
 
 import com.example.healthreset.model.ActivityLevel;
+import com.example.healthreset.model.MealOfTheDay;
 import com.example.healthreset.model.TypeOfExercise;
 import com.example.healthreset.repository.ActivityLevelRepository;
+import com.example.healthreset.repository.MealOfTheDayRepository;
 import com.example.healthreset.repository.TypeOfExerciseRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +33,19 @@ public class Config {
 //            TypeOfExercise typeOfExercise2 = new TypeOfExercise("Strength");
 //            TypeOfExercise typeOfExercise3 = new TypeOfExercise("Stretching");
 //            repository.saveAll(List.of(typeOfExercise1, typeOfExercise2, typeOfExercise3));
+//        };
+//    }
+
+//    @Bean
+//    CommandLineRunner commandLineRunner(MealOfTheDayRepository repository){
+//        return args -> {
+//            MealOfTheDay m1 = new MealOfTheDay("Breakfast");
+//            MealOfTheDay m2 = new MealOfTheDay("Morning snack");
+//            MealOfTheDay m3 = new MealOfTheDay("Lunch");
+//            MealOfTheDay m4 = new MealOfTheDay("Afternoon snack");
+//            MealOfTheDay m5 = new MealOfTheDay("Dinner");
+//            MealOfTheDay m6 = new MealOfTheDay("Evening snack");
+//            repository.saveAll(List.of(m1, m2, m3, m4, m5, m6));
 //        };
 //    }
 

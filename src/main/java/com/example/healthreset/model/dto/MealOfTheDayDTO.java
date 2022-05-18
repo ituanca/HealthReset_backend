@@ -7,10 +7,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PhysicalExerciseDTO {
-
-    String name;
-    String typeOfExercise;
-    Integer caloriesBurnedPerMinute;
-
+public class MealOfTheDayDTO {
+    String mealOfTheDay;
 }

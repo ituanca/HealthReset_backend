@@ -1,11 +1,9 @@
 package com.example.healthreset.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,6 +11,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "trackedActivity")
 public class TrackedActivity {
@@ -26,21 +25,15 @@ public class TrackedActivity {
     private RegularUser regularUser;
 
     @Column
-    private LocalDateTime trackedDay;
+    private LocalDate trackedDay;
 
     @Column
     private Integer nrOfSteps;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="trackedActivity_physicalExercise",
-            joinColumns = @JoinColumn(name="idTrackedActivity"),
-            inverseJoinColumns = @JoinColumn(name="idPhysicalExercise"))
-    private List<PhysicalExercise> listOfPhysicalExercises;
+    @OneToMany(mappedBy="trackedActivity")
+    private List<TrackedExercise> listOfTrackedExercises;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="trackedActivity_food",
-            joinColumns = @JoinColumn(name="idTrackedActivity"),
-            inverseJoinColumns = @JoinColumn(name="idTrackedFood"))
+    @OneToMany(mappedBy="trackedActivity")
     private List<TrackedFood> listOfTrackedFood;
 
 }

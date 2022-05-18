@@ -12,4 +12,12 @@ public class PhysicalExerciseMapper {
                 .build();
     }
 
+    public PhysicalExerciseDTO convertPhysicalExerciseToDTO(PhysicalExercise physicalExercise) {
+        return PhysicalExerciseDTO.builder()
+                .name(physicalExercise.getName())
+                .typeOfExercise(physicalExercise.getTypeOfExercise().getTypeOfExercise())
+                .caloriesBurnedPerMinute(physicalExercise.getCaloriesBurnedPerMinute())
+                .build();
+    }
+
 }

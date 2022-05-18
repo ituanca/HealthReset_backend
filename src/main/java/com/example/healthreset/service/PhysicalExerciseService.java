@@ -1,18 +1,21 @@
 package com.example.healthreset.service;
 
-import com.example.healthreset.model.PhysicalExercise;
-import com.example.healthreset.model.PrimaryFood;
-import com.example.healthreset.model.Profile;
-import com.example.healthreset.model.TypeOfExercise;
+import com.example.healthreset.model.*;
 import com.example.healthreset.model.dto.PhysicalExerciseDTO;
+import com.example.healthreset.model.dto.TypeOfExerciseDTO;
 import com.example.healthreset.repository.PhysicalExerciseRepository;
 import com.example.healthreset.repository.TypeOfExerciseRepository;
 import com.example.healthreset.utils.PhysicalExerciseMapper;
 import com.example.healthreset.utils.PrimaryFoodMapper;
 import com.example.healthreset.utils.ProfileMapper;
+import com.example.healthreset.utils.TypeOfExerciseMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -32,7 +35,10 @@ public class PhysicalExerciseService {
         if(!physicalExerciseDTO.getName().matches("^[a-zA-Z0-9\\-\\s]+$")){
             log.warn(" Name " + physicalExerciseDTO.getName() + " is not valid!");
             return "name_error";
-        } else if(physicalExerciseDTO.getTypeOfExercise()==null){
+        } else if(physicalExerciseRepository.findByName(physicalExerciseDTO.getName()).isPresent() ){
+            log.warn(" Exercise " + physicalExerciseDTO.getName() + " already exists!");
+            return "exercise_exists";
+        }else if(physicalExerciseDTO.getTypeOfExercise()==null){
             log.warn(" Type was not specified!");
             return "typeOfExercise_error";
         }else if(physicalExerciseDTO.getCaloriesBurnedPerMinute() < 0){
@@ -54,5 +60,26 @@ public class PhysicalExerciseService {
         log.info(" Physical exercise " + physicalExercise.getName() + " successfully added to database!");
         return "ok";
     }
+
+    public List<PhysicalExerciseDTO> findAll(){
+        List<PhysicalExercise> physicalExercises = physicalExerciseRepository.findAll();
+        List<PhysicalExerciseDTO> physicalExerciseDTOS = new ArrayList<>();
+        PhysicalExerciseMapper physicalExerciseMapper = new PhysicalExerciseMapper();
+        for(PhysicalExercise t : physicalExercises){
+            physicalExerciseDTOS.add(physicalExerciseMapper.convertPhysicalExerciseToDTO(t));
+        }
+        log.info(" Types of exercise " + physicalExerciseDTOS + " successfully fetched from database!");
+        return physicalExerciseDTOS;
+    }
+
+    public PhysicalExerciseDTO findByName(String name){
+        PhysicalExercise physicalExercise = physicalExerciseRepository.findByName(name).orElse(null);
+        PhysicalExerciseMapper physicalExerciseMapper = new PhysicalExerciseMapper();
+        if(physicalExercise!=null){
+            return physicalExerciseMapper.convertPhysicalExerciseToDTO(physicalExercise);
+        }
+        return null;
+    }
+
 
 }

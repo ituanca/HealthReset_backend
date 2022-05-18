@@ -32,10 +32,6 @@ public abstract class Food {
     @ManyToMany(mappedBy = "listOfIngredients")
     List<CompositeFood> listOfCompositeFood;
 
-    @OneToOne
-    @JoinColumn(name = "idTrackedFood")
-    TrackedFood trackedFood;
-
     public abstract int computeNumberOfCalories();
 
 }

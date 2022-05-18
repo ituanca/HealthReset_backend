@@ -6,11 +6,15 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Builder
-public class PhysicalExerciseDTO {
+public class TrackedExerciseDTO {
 
     String name;
     String typeOfExercise;
     Integer caloriesBurnedPerMinute;
+
+    String date;
+    Integer timeOfExecution;
 
 }

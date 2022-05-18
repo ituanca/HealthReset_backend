@@ -1,28 +1,31 @@
 package com.example.healthreset.model;
 
-import com.example.healthreset.model.enumClasses.MealOfTheDay;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
-@Table(name = "trackedFood")
-public class TrackedFood extends Food{
+public class TrackedFood extends PrimaryFood{
 
-    //@Convert(converter = MealOfTheDayJpaConverter.class)
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "idMealOfTheDay")
     MealOfTheDay mealOfTheDay;
+
+    @Column
+    Double trackedQuantity;
+
+    @ManyToOne
+    @JoinColumn(name = "idTrackedActivity")
+    TrackedActivity trackedActivity;
 
     @Override
     public int computeNumberOfCalories() {
         return 0;
     }
+
 }
