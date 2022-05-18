@@ -25,7 +25,7 @@ public class PhysicalExercise {
     @Column
     Integer caloriesBurnedPerMinute;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idTypeOfExercise")
     TypeOfExercise typeOfExercise;
 

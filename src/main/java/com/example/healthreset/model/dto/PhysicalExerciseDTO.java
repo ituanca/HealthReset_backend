@@ -10,7 +10,7 @@ import lombok.*;
 public class PhysicalExerciseDTO {
 
     String name;
-    String typeOfExercise;
+    TypeOfExerciseDTO typeOfExercise;
     Integer caloriesBurnedPerMinute;
 
 }

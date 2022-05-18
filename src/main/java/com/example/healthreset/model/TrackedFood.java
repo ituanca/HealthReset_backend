@@ -8,16 +8,15 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 public class TrackedFood extends PrimaryFood{
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idMealOfTheDay")
     MealOfTheDay mealOfTheDay;
 
     @Column
-    Double trackedQuantity;
+    Double eatenQuantity;
 
     @ManyToOne
     @JoinColumn(name = "idTrackedActivity")

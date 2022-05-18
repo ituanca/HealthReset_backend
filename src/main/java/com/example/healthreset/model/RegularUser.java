@@ -23,8 +23,9 @@ public class RegularUser extends User{
     @OneToMany(mappedBy = "regularUser")
     List<Ticket> tickets;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "regularUser")
-    List<TrackedActivity> trackedActivity;
+    private List<TrackedActivity> trackedActivity;
 
     @OneToMany(mappedBy = "regularUser")
     private List<CustomizedFood> listOfCustomizedFood;

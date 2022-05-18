@@ -20,7 +20,7 @@ public class TrackedActivity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idRegularUser")
     private RegularUser regularUser;
 
@@ -29,6 +29,12 @@ public class TrackedActivity {
 
     @Column
     private Integer nrOfSteps;
+
+    @Column
+    private Double burnedCalories;
+
+    @Column
+    private Double eatenCalories;
 
     @OneToMany(mappedBy="trackedActivity")
     private List<TrackedExercise> listOfTrackedExercises;

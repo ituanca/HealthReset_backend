@@ -50,9 +50,7 @@ public class PhysicalExerciseService {
         PhysicalExercise physicalExercise =
                 physicalExerciseMapper.convertDTOtoPhysicalExercise(physicalExerciseDTO);
 
-        String typeOfExerciseString = physicalExerciseDTO.getTypeOfExercise();
-        TypeOfExercise typeOfExercise =
-                typeOfExerciseRepository.findByTypeOfExercise(typeOfExerciseString).orElse(null);
+        TypeOfExercise typeOfExercise = typeOfExerciseRepository.findByTypeOfExercise(physicalExerciseDTO.getTypeOfExercise().getTypeOfExercise()).orElse(null);
 
         physicalExercise.setTypeOfExercise(typeOfExercise);
 
