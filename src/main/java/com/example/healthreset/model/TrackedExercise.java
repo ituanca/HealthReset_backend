@@ -3,8 +3,6 @@ package com.example.healthreset.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter
@@ -13,10 +11,7 @@ import java.util.List;
 @Entity
 public class TrackedExercise extends PhysicalExercise{
 
-    @Column
-    Integer timeOfExecution;
-
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idTrackedActivity")
     TrackedActivity trackedActivity;
 

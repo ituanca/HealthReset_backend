@@ -4,6 +4,7 @@ import com.example.healthreset.model.*;
 import com.example.healthreset.model.dto.TrackedActivityDTO;
 import com.example.healthreset.model.dto.TrackedExerciseDTO;
 import com.example.healthreset.model.dto.TrackedFoodDTO;
+import com.example.healthreset.repository.MealOfTheDayRepository;
 
 
 import java.time.LocalDate;
@@ -20,8 +21,7 @@ public class TrackedActivityMapper {
         List<TrackedExercise> trackedExercises = new ArrayList<>();
         TrackedExerciseMapper trackedExerciseMapper = new TrackedExerciseMapper();
         for(TrackedExerciseDTO t: trackedActivityDTO.getListOfTrackedExercises()){
-            TrackedExercise trackedExercise = trackedExerciseMapper.convertDTOtoTrackedExercise(t);
-            trackedExercises.add(trackedExercise);
+            trackedExercises.add(trackedExerciseMapper.convertDTOtoTrackedExercise(t));
         }
 
         List<TrackedFood> trackedFoodList = new ArrayList<>();

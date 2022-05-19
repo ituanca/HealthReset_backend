@@ -24,6 +24,12 @@ public class PrimaryFood extends Food{
     @Column
     int quantity;
 
+    @Column
+    String mealOfTheDay;
+
+    @Column
+    Double eatenQuantity;
+
     @Override
     public int computeNumberOfCalories() {
         return getCalories();

@@ -17,7 +17,7 @@ public class TrackedFoodMapper {
         trackedFood.setFat(Integer.parseInt(trackedFoodDTO.getFat()));
         trackedFood.setSodium(Integer.parseInt(trackedFoodDTO.getSodium()));
         trackedFood.setQuantity(Integer.parseInt(trackedFoodDTO.getQuantity()));
-        trackedFood.setMealOfTheDay(new MealOfTheDayMapper().convertDTOtoMealOfTheDay(trackedFoodDTO.getMealOfTheDay()));
+        trackedFood.setMealOfTheDay(trackedFoodDTO.getMealOfTheDay());
         trackedFood.setEatenQuantity(trackedFoodDTO.getEatenQuantity());
 
          return trackedFood;
@@ -26,10 +26,10 @@ public class TrackedFoodMapper {
 
     public TrackedFoodDTO convertTrackedFoodToDTO(TrackedFood trackedFood) {
 
-        MealOfTheDayDTO mealOfTheDayDTO = new MealOfTheDayDTO();
-        if(trackedFood.getMealOfTheDay()!=null){
-            mealOfTheDayDTO = new MealOfTheDayMapper().convertMealOfTheDayToDTO(trackedFood.getMealOfTheDay());
-        }
+//        MealOfTheDayDTO mealOfTheDayDTO = new MealOfTheDayDTO();
+//        if(trackedFood.getMealOfTheDay()!=null){
+//            mealOfTheDayDTO = new MealOfTheDayMapper().convertMealOfTheDayToDTO(trackedFood.getMealOfTheDay());
+//        }
 
         return TrackedFoodDTO.builder()
                 .name(trackedFood.getName())
@@ -38,7 +38,7 @@ public class TrackedFoodMapper {
                 .fat(String.valueOf(trackedFood.getFat()))
                 .sodium(String.valueOf(trackedFood.getSodium()))
                 .quantity(String.valueOf(trackedFood.getQuantity()))
-                .mealOfTheDay(mealOfTheDayDTO)
+                .mealOfTheDay(trackedFood.getMealOfTheDay())
                 .eatenQuantity(trackedFood.getEatenQuantity())
                 .build();
     }

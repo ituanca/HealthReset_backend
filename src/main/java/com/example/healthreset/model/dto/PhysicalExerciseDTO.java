@@ -12,5 +12,6 @@ public class PhysicalExerciseDTO {
     String name;
     TypeOfExerciseDTO typeOfExercise;
     Integer caloriesBurnedPerMinute;
+    Integer timeOfExecution;
 
 }

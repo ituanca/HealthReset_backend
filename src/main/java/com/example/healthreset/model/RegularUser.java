@@ -17,6 +17,7 @@ public class RegularUser extends User{
     @Column(name="name")
     String name;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "regularUser")
     private Profile profile;
 

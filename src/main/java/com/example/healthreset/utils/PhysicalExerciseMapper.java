@@ -10,6 +10,7 @@ public class PhysicalExerciseMapper {
         return PhysicalExercise.builder()
                 .name(physicalExerciseDTO.getName())
                 .caloriesBurnedPerMinute(physicalExerciseDTO.getCaloriesBurnedPerMinute())
+                .timeOfExecution(physicalExerciseDTO.getTimeOfExecution())
                 .build();
     }
 
@@ -21,6 +22,7 @@ public class PhysicalExerciseMapper {
                 .name(physicalExercise.getName())
                 .typeOfExercise(typeOfExerciseDTO)
                 .caloriesBurnedPerMinute(physicalExercise.getCaloriesBurnedPerMinute())
+                .timeOfExecution(physicalExercise.getTimeOfExecution())
                 .build();
     }
 

@@ -16,7 +16,7 @@ public class TrackedFoodDTO {
     String fat;
     String sodium;
     String quantity;
-    MealOfTheDayDTO mealOfTheDay;
+    String mealOfTheDay;
     Double eatenQuantity;
 
 }

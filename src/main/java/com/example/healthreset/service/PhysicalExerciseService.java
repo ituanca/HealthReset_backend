@@ -64,7 +64,9 @@ public class PhysicalExerciseService {
         List<PhysicalExerciseDTO> physicalExerciseDTOS = new ArrayList<>();
         PhysicalExerciseMapper physicalExerciseMapper = new PhysicalExerciseMapper();
         for(PhysicalExercise t : physicalExercises){
-            physicalExerciseDTOS.add(physicalExerciseMapper.convertPhysicalExerciseToDTO(t));
+            if(t.getTypeOfExercise()!=null){
+                physicalExerciseDTOS.add(physicalExerciseMapper.convertPhysicalExerciseToDTO(t));
+            }
         }
         log.info(" Types of exercise " + physicalExerciseDTOS + " successfully fetched from database!");
         return physicalExerciseDTOS;

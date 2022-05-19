@@ -11,7 +11,6 @@ import lombok.*;
 public class TrackedExerciseDTO {
 
     String name;
-    TypeOfExerciseDTO typeOfExercise;
     Integer caloriesBurnedPerMinute;
 
     String date;

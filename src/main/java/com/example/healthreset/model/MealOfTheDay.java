@@ -21,8 +21,8 @@ public class MealOfTheDay {
     @Column
     private String mealOfTheDay;
 
-    @OneToMany(mappedBy = "mealOfTheDay")
-    private List<TrackedFood> listOfTrackedFood;
+//    @OneToMany(mappedBy = "mealOfTheDay")
+//    private List<TrackedFood> listOfTrackedFood;
 
     public MealOfTheDay(String mealOfTheDay) {
         this.mealOfTheDay = mealOfTheDay;

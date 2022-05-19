@@ -1,14 +1,12 @@
 package com.example.healthreset.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class PrimaryFoodDTO {
 
     String name;
@@ -17,5 +15,7 @@ public class PrimaryFoodDTO {
     String fat;
     String sodium;
     String quantity;
+    String mealOfTheDay;
+    Double eatenQuantity;
 
 }

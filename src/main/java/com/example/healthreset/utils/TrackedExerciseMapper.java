@@ -12,7 +12,6 @@ public class TrackedExerciseMapper {
 
         TrackedExercise trackedExercise = new TrackedExercise();
         trackedExercise.setName(trackedExerciseDTO.getName());
-        trackedExercise.setTypeOfExercise(new TypeOfExerciseMapper().convertDTOtoTypeOfExercise(trackedExerciseDTO.getTypeOfExercise()));
         trackedExercise.setCaloriesBurnedPerMinute(trackedExercise.getCaloriesBurnedPerMinute());
         trackedExercise.setTimeOfExecution(trackedExerciseDTO.getTimeOfExecution());
 
@@ -24,7 +23,6 @@ public class TrackedExerciseMapper {
         return TrackedExerciseDTO.builder()
                 .name(trackedExercise.getName())
                 .caloriesBurnedPerMinute(trackedExercise.getCaloriesBurnedPerMinute())
-                .typeOfExercise(new TypeOfExerciseMapper().convertTypeOfExerciseToDTO(trackedExercise.getTypeOfExercise()))
                 .timeOfExecution(trackedExercise.getTimeOfExecution())
                 .build();
     }
