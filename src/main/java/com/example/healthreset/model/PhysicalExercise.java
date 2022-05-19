@@ -35,8 +35,4 @@ public class PhysicalExercise {
     @ManyToMany(mappedBy="listOfPhysicalExercises")
     List<Routine> listOfRoutines;
 
-    @ManyToOne
-    @JoinColumn(name = "idFitnessProgram")
-    FitnessProgram fitnessProgram;
-
 }

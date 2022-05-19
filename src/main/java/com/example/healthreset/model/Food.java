@@ -26,9 +26,6 @@ public abstract class Food {
     @Column
     int calories;
 
-    @ManyToMany(mappedBy = "listOfFood")
-    List<MealPlan> mealPlans;
-
     @ManyToMany(mappedBy = "listOfIngredients")
     List<CompositeFood> listOfCompositeFood;
 

@@ -7,6 +7,8 @@ import com.example.healthreset.model.dto.PhysicalExerciseDTO;
 import com.example.healthreset.model.dto.PrimaryFoodDTO;
 import com.example.healthreset.model.dto.TrackedFoodDTO;
 import com.example.healthreset.repository.PrimaryFoodRepository;
+import com.example.healthreset.repository.TrackedExerciseRepository;
+import com.example.healthreset.repository.TrackedFoodRepository;
 import com.example.healthreset.utils.PhysicalExerciseMapper;
 import com.example.healthreset.utils.PrimaryFoodMapper;
 import com.example.healthreset.utils.TrackedFoodMapper;

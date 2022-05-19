@@ -1,10 +1,6 @@
 package com.example.healthreset.model;
 
-import com.example.healthreset.model.enumClasses.StatusRoutine;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,6 +9,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "routine")
 public class Routine {
@@ -21,11 +18,11 @@ public class Routine {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @OneToOne(mappedBy = "routine")
-    private MealPlan mealPlan;
+    @Column
+    String name;
 
     @ManyToOne
-    @JoinColumn(name = "idActivityLevel")
+    @JoinColumn(name = "idActivityLevel", insertable = false, updatable = false)
     private ActivityLevel activityLevel;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -34,10 +31,17 @@ public class Routine {
             inverseJoinColumns = @JoinColumn(name="idPhysicalExercise"))
     private List<PhysicalExercise> listOfPhysicalExercises;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="routine_routineFood",
+            joinColumns = @JoinColumn(name="idRoutine"),
+            inverseJoinColumns = @JoinColumn(name="idRoutineFood"))
+    private List<RoutineFood> listOfFood;
+
     @Column
     private String description;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "idActivityLevel")
     private StatusRoutine statusRoutine;
 
     @ManyToOne

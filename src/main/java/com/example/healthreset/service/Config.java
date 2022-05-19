@@ -2,9 +2,11 @@ package com.example.healthreset.service;
 
 import com.example.healthreset.model.ActivityLevel;
 import com.example.healthreset.model.MealOfTheDay;
+import com.example.healthreset.model.StatusRoutine;
 import com.example.healthreset.model.TypeOfExercise;
 import com.example.healthreset.repository.ActivityLevelRepository;
 import com.example.healthreset.repository.MealOfTheDayRepository;
+import com.example.healthreset.repository.StatusRoutineRepository;
 import com.example.healthreset.repository.TypeOfExerciseRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -46,6 +48,15 @@ public class Config {
 //            MealOfTheDay m5 = new MealOfTheDay("Dinner");
 //            MealOfTheDay m6 = new MealOfTheDay("Evening snack");
 //            repository.saveAll(List.of(m1, m2, m3, m4, m5, m6));
+//        };
+//    }
+
+//        @Bean
+//    CommandLineRunner commandLineRunner(StatusRoutineRepository repository){
+//        return args -> {
+//            StatusRoutine m1 = new StatusRoutine("APPROVED");
+//            StatusRoutine m2 = new StatusRoutine("NOT APPROVED");
+//            repository.saveAll(List.of(m1, m2));
 //        };
 //    }
 

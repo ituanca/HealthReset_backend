@@ -1,6 +1,7 @@
 package com.example.healthreset.utils;
 
 import com.example.healthreset.model.PrimaryFood;
+import com.example.healthreset.model.RoutineFood;
 import com.example.healthreset.model.dto.PrimaryFoodDTO;
 
 public class PrimaryFoodMapper {
@@ -31,4 +32,5 @@ public class PrimaryFoodMapper {
                 .eatenQuantity(primaryfood.getEatenQuantity())
                 .build();
     }
+
 }
