@@ -24,7 +24,7 @@ public class TypeOfExercise {
 
     @JsonIgnore
     @OneToMany(mappedBy = "typeOfExercise")
-    List<PhysicalExercise> exercises;
+    List<Exercise> exercises;
 
     public TypeOfExercise(String typeOfExercise) {
         this.typeOfExercise=typeOfExercise;

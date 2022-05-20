@@ -13,19 +13,12 @@ import java.util.List;
 public class RoutineDTO {
 
     String name;
-
     String activityLevel;
-
-    List<PhysicalExerciseDTO> listOfPhysicalExercises;
-
+    List<RoutineExerciseDTO> listOfPhysicalExercises;
     List<RoutineFoodDTO> listOfFood;
-
     String description;
-
     String statusRoutine;
-
     UserDTO specialist;
-
     UserDTO admin;
 
 }

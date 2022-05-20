@@ -26,6 +26,18 @@ public abstract class Food {
     @Column
     int calories;
 
+    @Column
+    int protein;
+
+    @Column
+    int fat;
+
+    @Column
+    int sodium;
+
+    @Column
+    int quantity;
+
     @ManyToMany(mappedBy = "listOfIngredients")
     List<CompositeFood> listOfCompositeFood;
 

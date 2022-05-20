@@ -9,7 +9,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class TrackedExercise extends PhysicalExercise{
+public class TrackedExercise extends Exercise {
+
+    @Column
+    Integer timeOfExecution;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idTrackedActivity")

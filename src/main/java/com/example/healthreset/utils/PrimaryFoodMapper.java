@@ -7,13 +7,11 @@ import com.example.healthreset.model.dto.PrimaryFoodDTO;
 public class PrimaryFoodMapper {
     public PrimaryFood convertDTOtoPrimaryFood(PrimaryFoodDTO primaryfoodDTO) {
         PrimaryFood food = PrimaryFood.builder()
-                .protein(Integer.parseInt(primaryfoodDTO.getProtein()))
-                .fat(Integer.parseInt(primaryfoodDTO.getFat()))
-                .sodium(Integer.parseInt(primaryfoodDTO.getSodium()))
-                .quantity(Integer.parseInt(primaryfoodDTO.getQuantity()))
-                .mealOfTheDay(primaryfoodDTO.getMealOfTheDay())
-                .eatenQuantity(primaryfoodDTO.getEatenQuantity())
                 .build();
+        food.setProtein(Integer.parseInt(primaryfoodDTO.getProtein()));
+        food.setFat(Integer.parseInt(primaryfoodDTO.getFat()));
+        food.setSodium(Integer.parseInt(primaryfoodDTO.getSodium()));
+        food.setQuantity(Integer.parseInt(primaryfoodDTO.getQuantity()));
         food.setName(primaryfoodDTO.getName());
         food.setCalories(Integer.parseInt(primaryfoodDTO.getCalories()));
         return food;
@@ -28,8 +26,7 @@ public class PrimaryFoodMapper {
                 .fat(String.valueOf(primaryfood.getFat()))
                 .sodium(String.valueOf(primaryfood.getSodium()))
                 .quantity(String.valueOf(primaryfood.getQuantity()))
-                .mealOfTheDay(primaryfood.getMealOfTheDay())
-                .eatenQuantity(primaryfood.getEatenQuantity())
+                .mealOfTheDay("")
                 .build();
     }
 

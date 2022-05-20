@@ -5,7 +5,6 @@ import com.example.healthreset.model.TrackedExercise;
 import com.example.healthreset.model.TypeOfExercise;
 import com.example.healthreset.model.dto.TrackedExerciseDTO;
 
-
 public class TrackedExerciseMapper {
 
     public TrackedExercise convertDTOtoTrackedExercise(TrackedExerciseDTO trackedExerciseDTO) {

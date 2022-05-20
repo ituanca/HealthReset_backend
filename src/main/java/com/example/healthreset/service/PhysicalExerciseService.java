@@ -2,20 +2,16 @@ package com.example.healthreset.service;
 
 import com.example.healthreset.model.*;
 import com.example.healthreset.model.dto.PhysicalExerciseDTO;
-import com.example.healthreset.model.dto.TypeOfExerciseDTO;
+import com.example.healthreset.repository.ExerciseRepository;
 import com.example.healthreset.repository.PhysicalExerciseRepository;
 import com.example.healthreset.repository.TypeOfExerciseRepository;
 import com.example.healthreset.utils.PhysicalExerciseMapper;
-import com.example.healthreset.utils.PrimaryFoodMapper;
-import com.example.healthreset.utils.ProfileMapper;
-import com.example.healthreset.utils.TypeOfExerciseMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -55,7 +51,7 @@ public class PhysicalExerciseService {
         physicalExercise.setTypeOfExercise(typeOfExercise);
 
         physicalExerciseRepository.save(physicalExercise);
-        log.info(" Physical exercise " + physicalExercise.getName() + " successfully added to database!");
+        log.info(" Physical physicalExercise " + physicalExercise.getName() + " successfully added to database!");
         return "ok";
     }
 
@@ -75,7 +71,7 @@ public class PhysicalExerciseService {
     public PhysicalExerciseDTO findByName(String name){
         PhysicalExercise physicalExercise = physicalExerciseRepository.findByName(name).orElse(null);
         PhysicalExerciseMapper physicalExerciseMapper = new PhysicalExerciseMapper();
-        if(physicalExercise!=null){
+        if(physicalExercise !=null){
             return physicalExerciseMapper.convertPhysicalExerciseToDTO(physicalExercise);
         }
         return null;

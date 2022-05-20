@@ -47,4 +47,12 @@ public class UsersMapper {
         return specialist;
     }
 
+    public UserDTO convertSpecialistToDTO(Specialist specialist){
+        return UserDTO.builder()
+                .name(specialist.getName())
+                .email(specialist.getEmail())
+                .username(specialist.getUsername())
+                .build();
+    }
+
 }

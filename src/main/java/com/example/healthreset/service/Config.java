@@ -56,7 +56,8 @@ public class Config {
 //        return args -> {
 //            StatusRoutine m1 = new StatusRoutine("APPROVED");
 //            StatusRoutine m2 = new StatusRoutine("NOT APPROVED");
-//            repository.saveAll(List.of(m1, m2));
+//            StatusRoutine m3 = new StatusRoutine("DISAPPROVED");
+//            repository.save(m3);
 //        };
 //    }
 

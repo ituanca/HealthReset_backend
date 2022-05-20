@@ -22,14 +22,14 @@ public class Routine {
     String name;
 
     @ManyToOne
-    @JoinColumn(name = "idActivityLevel", insertable = false, updatable = false)
-    private ActivityLevel activityLevel;
+    @JoinColumn(name = "idActivityLevelRoutine")
+    ActivityLevel activityLevelRoutine;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="routine_physicalExercise",
+    @JoinTable(name="routine_routineExercise",
             joinColumns = @JoinColumn(name="idRoutine"),
-            inverseJoinColumns = @JoinColumn(name="idPhysicalExercise"))
-    private List<PhysicalExercise> listOfPhysicalExercises;
+            inverseJoinColumns = @JoinColumn(name="idRoutineExercise"))
+    private List<RoutineExercise> listOfPhysicalExercises;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="routine_routineFood",
@@ -41,7 +41,7 @@ public class Routine {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "idActivityLevel")
+    @JoinColumn(name = "idStatusRoutine")
     private StatusRoutine statusRoutine;
 
     @ManyToOne

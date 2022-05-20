@@ -4,13 +4,12 @@ import com.example.healthreset.model.Routine;
 import com.example.healthreset.model.dto.*;
 import com.example.healthreset.service.RoutineService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -34,6 +33,35 @@ public class RoutineController {
                 "specialist: " + routineDTO.getSpecialist().getUsername() + " " +
                 "admin: " + routineDTO.getAdmin());
         return routineService.createRoutine(routineDTO);
+    }
+
+    @GetMapping("/checkIfExists")
+    public String checkIfExists(@Param("admin") String name){
+        log.info(" name entered: " + name);
+        return routineService.checkIfNameExists(name);
+    }
+
+    @GetMapping("/index")
+    public List<RoutineDTO> findAll(){
+        List<RoutineDTO> routineDTOS = routineService.findAll();
+        for(RoutineDTO r : routineDTOS){
+            log.info(" data entered: " +
+                    "activity level: " + r.getActivityLevel() + " " +
+                    "exercises: " + r.getListOfPhysicalExercises() + " " +
+                    "food: " + r.getListOfFood() + " " +
+                    "description: " + r.getDescription() + " " +
+                    "status: " + r.getStatusRoutine() + " " +
+                    "specialist: " + r.getSpecialist().getUsername() + " " +
+                    "admin: " + r.getAdmin());
+        }
+
+        return routineDTOS;
+    }
+
+    @PutMapping(value = "/updateStatus", consumes = {"application/json"})
+    public String updateStatus( @RequestBody RoutineDTO routineDTO){
+        log.info(" data entered: " + routineDTO);
+        return routineService.updateStatus(routineDTO);
     }
 
 }

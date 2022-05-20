@@ -1,38 +1,14 @@
 package com.example.healthreset.model;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-@ToString
 @Entity
-@Table(name = "physicalExercise")
-public class PhysicalExercise {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer id;
-
-    @Column
-    String name;
-
-    @Column
-    Integer caloriesBurnedPerMinute;
-
-    @Column
-    Integer timeOfExecution;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idTypeOfExercise")
-    TypeOfExercise typeOfExercise;
-
-    @ManyToMany(mappedBy="listOfPhysicalExercises")
-    List<Routine> listOfRoutines;
-
+public class PhysicalExercise extends Exercise{
 }

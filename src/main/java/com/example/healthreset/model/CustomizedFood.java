@@ -7,8 +7,8 @@ import javax.persistence.ManyToOne;
 @Entity
 public class CustomizedFood extends PrimaryFood{
 
-    @ManyToOne
-    @JoinColumn(name = "idRegularUser")
-    private RegularUser regularUser;
+//    @ManyToOne
+//    @JoinColumn(name = "idRegularUser")
+//    private RegularUser regularUser;
 
 }

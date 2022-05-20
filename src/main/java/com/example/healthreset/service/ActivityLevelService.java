@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 public class ActivityLevelService {
 
-
     private final ActivityLevelRepository activityLevelRepository;
 
     public ActivityLevelService(ActivityLevelRepository activityLevelRepository) {

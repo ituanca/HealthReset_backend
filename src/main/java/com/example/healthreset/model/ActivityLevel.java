@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "activityLevel")
 public class ActivityLevel {
 
     @Id
@@ -20,7 +21,7 @@ public class ActivityLevel {
     @Column
     private String activityLevel;
 
-    @OneToMany(mappedBy = "activityLevel")
+    @OneToMany(mappedBy = "activityLevelRoutine")
     private List<Routine> routines;
 
     @OneToMany(mappedBy = "activityLevel")

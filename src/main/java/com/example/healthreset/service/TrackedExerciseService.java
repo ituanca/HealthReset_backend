@@ -1,10 +1,9 @@
 package com.example.healthreset.service;
 
-import com.example.healthreset.model.PhysicalExercise;
+import com.example.healthreset.model.Exercise;
 import com.example.healthreset.model.TrackedExercise;
-import com.example.healthreset.model.TypeOfExercise;
 import com.example.healthreset.model.dto.TrackedExerciseDTO;
-import com.example.healthreset.repository.PhysicalExerciseRepository;
+import com.example.healthreset.repository.ExerciseRepository;
 import com.example.healthreset.repository.TrackedExerciseRepository;
 import com.example.healthreset.repository.TypeOfExerciseRepository;
 import com.example.healthreset.utils.TrackedExerciseMapper;
@@ -20,26 +19,26 @@ import java.util.List;
 public class TrackedExerciseService {
 
     private final TrackedExerciseRepository trackedExerciseRepository;
-    private final PhysicalExerciseRepository physicalExerciseRepository;
+    private final ExerciseRepository exerciseRepository;
     private final TypeOfExerciseRepository typeOfExerciseRepository;
 
     @Autowired
-    public TrackedExerciseService(TrackedExerciseRepository trackedExerciseRepository, PhysicalExerciseRepository physicalExerciseRepository, TypeOfExerciseRepository typeOfExerciseRepository) {
+    public TrackedExerciseService(TrackedExerciseRepository trackedExerciseRepository, ExerciseRepository exerciseRepository, TypeOfExerciseRepository typeOfExerciseRepository) {
         this.trackedExerciseRepository = trackedExerciseRepository;
-        this.physicalExerciseRepository = physicalExerciseRepository;
+        this.exerciseRepository = exerciseRepository;
         this.typeOfExerciseRepository = typeOfExerciseRepository;
     }
 
     public List<TrackedExerciseDTO> findAll(){
-        List<PhysicalExercise> physicalExercises = physicalExerciseRepository.findAll();
+        List<Exercise> exercises = exerciseRepository.findAll();
         List<TrackedExerciseDTO> trackedExercisesDTOS = new ArrayList<>();
 
         TrackedExerciseMapper trackedExerciseMapper = new TrackedExerciseMapper();
-        for(PhysicalExercise physicalExercise : physicalExercises) {
+        for(Exercise exercise : exercises) {
             TrackedExercise trackedExercise = new TrackedExercise();
-            trackedExercise.setName(physicalExercise.getName());
-            trackedExercise.setCaloriesBurnedPerMinute(physicalExercise.getCaloriesBurnedPerMinute());
-            trackedExercise.setTypeOfExercise(physicalExercise.getTypeOfExercise());
+            trackedExercise.setName(exercise.getName());
+            trackedExercise.setCaloriesBurnedPerMinute(exercise.getCaloriesBurnedPerMinute());
+            trackedExercise.setTypeOfExercise(exercise.getTypeOfExercise());
             trackedExercisesDTOS.add(trackedExerciseMapper.convertTrackedExerciseToDTO(trackedExercise));
         }
         log.info(" Tracked exercises " + trackedExercisesDTOS + " successfully fetched!");

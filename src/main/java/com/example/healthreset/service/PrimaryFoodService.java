@@ -1,17 +1,9 @@
 package com.example.healthreset.service;
 
-import com.example.healthreset.model.PhysicalExercise;
 import com.example.healthreset.model.PrimaryFood;
-import com.example.healthreset.model.TrackedFood;
-import com.example.healthreset.model.dto.PhysicalExerciseDTO;
 import com.example.healthreset.model.dto.PrimaryFoodDTO;
-import com.example.healthreset.model.dto.TrackedFoodDTO;
 import com.example.healthreset.repository.PrimaryFoodRepository;
-import com.example.healthreset.repository.TrackedExerciseRepository;
-import com.example.healthreset.repository.TrackedFoodRepository;
-import com.example.healthreset.utils.PhysicalExerciseMapper;
 import com.example.healthreset.utils.PrimaryFoodMapper;
-import com.example.healthreset.utils.TrackedFoodMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,9 +54,7 @@ public class PrimaryFoodService {
         List<PrimaryFoodDTO> listOfPrimaryFoodDTO = new ArrayList<>();
         PrimaryFoodMapper primaryFoodMapper = new PrimaryFoodMapper();
         for(PrimaryFood t : listOfPrimaryFood){
-            if(t.getMealOfTheDay()==null){
-                listOfPrimaryFoodDTO.add(primaryFoodMapper.convertPrimaryFoodToDTO(t));
-            }
+            listOfPrimaryFoodDTO.add(primaryFoodMapper.convertPrimaryFoodToDTO(t));
         }
         log.info(" Food " + listOfPrimaryFoodDTO + " successfully fetched from database!");
         return listOfPrimaryFoodDTO;

@@ -1,19 +1,14 @@
 package com.example.healthreset.service;
 
-import com.example.healthreset.model.PhysicalExercise;
 import com.example.healthreset.model.PrimaryFood;
-import com.example.healthreset.model.TrackedExercise;
 import com.example.healthreset.model.TrackedFood;
-import com.example.healthreset.model.dto.TrackedExerciseDTO;
 import com.example.healthreset.model.dto.TrackedFoodDTO;
 import com.example.healthreset.repository.PrimaryFoodRepository;
 import com.example.healthreset.repository.TrackedExerciseRepository;
-import com.example.healthreset.utils.TrackedExerciseMapper;
 import com.example.healthreset.utils.TrackedFoodMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Column;
 import java.util.ArrayList;
 import java.util.List;
 

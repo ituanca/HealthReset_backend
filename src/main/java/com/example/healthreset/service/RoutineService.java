@@ -1,16 +1,18 @@
 package com.example.healthreset.service;
 
 import com.example.healthreset.model.*;
-import com.example.healthreset.model.dto.PhysicalExerciseDTO;
-import com.example.healthreset.model.dto.RoutineDTO;
-import com.example.healthreset.model.dto.RoutineFoodDTO;
+import com.example.healthreset.model.dto.*;
 import com.example.healthreset.repository.*;
+import com.example.healthreset.utils.ActivityLevelMapper;
+import com.example.healthreset.utils.ProfileMapper;
 import com.example.healthreset.utils.RoutineMapper;
+import com.example.healthreset.utils.validation.ProfileValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -18,20 +20,24 @@ public class RoutineService {
 
     private final RoutineRepository routineRepository;
     private final ActivityLevelRepository activityLevelRepository;
+    private final ExerciseRepository exerciseRepository;
     private final PhysicalExerciseRepository physicalExerciseRepository;
     private final RoutineFoodRepository routineFoodRepository;
     private final PrimaryFoodRepository primaryFoodRepository;
     private final SpecialistRepository specialistRepository;
     private final AdminRepository adminRepository;
+    private final StatusRoutineRepository statusRoutineRepository;
 
-    public RoutineService(RoutineRepository routineRepository, ActivityLevelRepository activityLevelRepository, PhysicalExerciseRepository physicalExerciseRepository, RoutineFoodRepository routineFoodRepository, PrimaryFoodRepository primaryFoodRepository, SpecialistRepository specialistRepository, AdminRepository adminRepository) {
+    public RoutineService(RoutineRepository routineRepository, ActivityLevelRepository activityLevelRepository, ExerciseRepository exerciseRepository, PhysicalExerciseRepository physicalExerciseRepository, RoutineFoodRepository routineFoodRepository, PrimaryFoodRepository primaryFoodRepository, SpecialistRepository specialistRepository, AdminRepository adminRepository, StatusRoutineRepository statusRoutineRepository) {
         this.routineRepository = routineRepository;
         this.activityLevelRepository = activityLevelRepository;
+        this.exerciseRepository = exerciseRepository;
         this.physicalExerciseRepository = physicalExerciseRepository;
         this.routineFoodRepository = routineFoodRepository;
         this.primaryFoodRepository = primaryFoodRepository;
         this.specialistRepository = specialistRepository;
         this.adminRepository = adminRepository;
+        this.statusRoutineRepository = statusRoutineRepository;
     }
 
     public String createRoutine(RoutineDTO routineDTO) {
@@ -48,21 +54,42 @@ public class RoutineService {
         String activityLevelString = routineDTO.getActivityLevel();
         ActivityLevel activityLevel =
                 activityLevelRepository.findByActivityLevel(activityLevelString).orElse(null);
-        routine.setActivityLevel(activityLevel);
+
+        routine.setActivityLevelRoutine(activityLevel);
 
         // fetch physical exercises from database and set
-        List<PhysicalExercise> physicalExercises = new ArrayList<PhysicalExercise>();
-        for(PhysicalExerciseDTO dto: routineDTO.getListOfPhysicalExercises()){
+        List<RoutineExercise> routineExercises = new ArrayList<>();
+        for(RoutineExerciseDTO dto: routineDTO.getListOfPhysicalExercises()){
             PhysicalExercise physicalExercise = physicalExerciseRepository.findByName(dto.getName()).orElse(null);
-            physicalExercises.add(physicalExercise);
-        }
-        routine.setListOfPhysicalExercises(physicalExercises);
+            if(physicalExercise != null){
+                RoutineExercise routineExercise = new RoutineExercise();
 
-        // fetch primary food from database and set
+                routineExercise.setName(physicalExercise.getName());
+                routineExercise.setTypeOfExercise(physicalExercise.getTypeOfExercise());
+                routineExercise.setCaloriesBurnedPerMinute(physicalExercise.getCaloriesBurnedPerMinute());
+
+                routineExercises.add(routineExercise);
+            }
+        }
+        routine.setListOfPhysicalExercises(routineExercises);
+
+        // fetch primary food from database and set as routine food
         List<RoutineFood> listOfRoutineFood = new ArrayList<>();
         for(RoutineFoodDTO dto: routineDTO.getListOfFood()){
             PrimaryFood primaryFood = primaryFoodRepository.findByName(dto.getName()).orElse(null);
-            listOfRoutineFood.add((RoutineFood) primaryFood);
+            if(primaryFood!=null){
+                RoutineFood routineFood = new RoutineFood();
+
+                routineFood.setName(primaryFood.getName());
+                routineFood.setCalories(primaryFood.getCalories());
+                routineFood.setQuantity(primaryFood.getQuantity());
+                routineFood.setFat(primaryFood.getFat());
+                routineFood.setProtein(primaryFood.getProtein());
+                routineFood.setSodium(primaryFood.getSodium());
+                routineFood.setMealOfTheDay(dto.getMealOfTheDay());
+
+                listOfRoutineFood.add(routineFood);
+            }
         }
         routine.setListOfFood(listOfRoutineFood);
 
@@ -70,23 +97,66 @@ public class RoutineService {
         specialistRepository.findByUsername(routineDTO.getSpecialist().getUsername()).ifPresent(routine::setSpecialist);
 
         //fetch admin and set
-        adminRepository.findByUsername(routineDTO.getAdmin().getUsername()).ifPresent(routine::setAdmin);
+        if(routineDTO.getAdmin()!=null){
+            adminRepository.findByUsername(routineDTO.getAdmin().getUsername()).ifPresent(routine::setAdmin);
+        }
 
-        StatusRoutine statusRoutine = new StatusRoutine("NOT_APPROVED");
-        //routine.setStatusRoutine(statusRoutine);
+        StatusRoutine statusRoutine = statusRoutineRepository.findByStatusRoutine("NOT APPROVED").orElse(null);
+        routine.setStatusRoutine(statusRoutine);
 
-        for(PhysicalExercise p: physicalExercises){
-            p.getListOfRoutines().add(routine);
+        for(RoutineExercise p: routineExercises){
+            if(p.getListOfRoutines()!=null){
+                p.getListOfRoutines().add(routine);
+            }
         }
 
         for(RoutineFood p: listOfRoutineFood){
-            p.getListOfRoutines().add(routine);
+            if(p.getListOfRoutines()!=null){
+                p.getListOfRoutines().add(routine);
+            }
         }
 
         routineRepository.save(routine);
         log.info("Routine was created!");
 
         return "ok";
+    }
+
+    public String checkIfNameExists(String name){
+        Optional<Routine> routine = routineRepository.findByName(name);
+        if(routine.isEmpty()){
+            log.warn(" Routine with name " + name + " was not found!");
+        }else{
+            log.info(" Routine with name " + name + " was found!");
+            return "name_exists";
+        }
+        return "ok";
+    }
+
+    public List<RoutineDTO> findAll(){
+        List<Routine> routines = routineRepository.findAll();
+        List<RoutineDTO> routineDTOS = new ArrayList<>();
+        RoutineMapper routineMapper = new RoutineMapper();
+        for(Routine a : routines){
+            routineDTOS.add(routineMapper.convertRoutineToDTO(a));
+        }
+        log.info(" Routines " + routineDTOS + " successfully fetched from database!");
+        return routineDTOS;
+    }
+
+    public String updateStatus(RoutineDTO routineDTO){
+
+        StatusRoutine statusRoutine = statusRoutineRepository.findByStatusRoutine(routineDTO.getStatusRoutine()).orElse(null);
+
+        if(statusRoutine != null){
+            routineRepository.findByName(routineDTO.getName())
+                    .map(routine -> {
+                        routine.setStatusRoutine(statusRoutine);
+                        return routineRepository.save(routine);
+                    });
+            return "updated";
+        }
+        return "not_updated";
     }
 
 }

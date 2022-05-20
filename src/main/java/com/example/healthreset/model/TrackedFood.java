@@ -6,10 +6,14 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
-public class TrackedFood extends PrimaryFood{
+public class TrackedFood extends Food{
+
+    @Column
+    String mealOfTheDay;
+
+    @Column
+    Double eatenQuantity;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idTrackedActivity")
@@ -17,7 +21,7 @@ public class TrackedFood extends PrimaryFood{
 
     @Override
     public int computeNumberOfCalories() {
-        return 0;
+        return getCalories();
     }
 
 }
