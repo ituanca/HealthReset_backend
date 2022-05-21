@@ -3,10 +3,7 @@ package com.example.healthreset.service;
 import com.example.healthreset.model.*;
 import com.example.healthreset.model.dto.*;
 import com.example.healthreset.repository.*;
-import com.example.healthreset.utils.ActivityLevelMapper;
-import com.example.healthreset.utils.ProfileMapper;
 import com.example.healthreset.utils.RoutineMapper;
-import com.example.healthreset.utils.validation.ProfileValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -157,6 +154,21 @@ public class RoutineService {
             return "updated";
         }
         return "not_updated";
+    }
+
+    public List<RoutineDTO> findApprovedRoutines(){
+        List<Routine> routines = routineRepository.findAll();
+        List<RoutineDTO> routineDTOS = new ArrayList<>();
+        RoutineMapper routineMapper = new RoutineMapper();
+        for(Routine a : routines){
+            StatusRoutine statusRoutine = new StatusRoutine();
+            statusRoutine = statusRoutineRepository.findByStatusRoutine("APPROVED").orElse(null);
+            if(a.getStatusRoutine().equals(statusRoutine)){
+                routineDTOS.add(routineMapper.convertRoutineToDTO(a));
+            }
+        }
+        log.info(" Routines " + routineDTOS + " successfully fetched from database!");
+        return routineDTOS;
     }
 
 }

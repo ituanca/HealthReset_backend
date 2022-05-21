@@ -45,7 +45,7 @@ public class RoutineController {
     public List<RoutineDTO> findAll(){
         List<RoutineDTO> routineDTOS = routineService.findAll();
         for(RoutineDTO r : routineDTOS){
-            log.info(" data entered: " +
+            log.info(" data fetched: " +
                     "activity level: " + r.getActivityLevel() + " " +
                     "exercises: " + r.getListOfPhysicalExercises() + " " +
                     "food: " + r.getListOfFood() + " " +
@@ -54,7 +54,6 @@ public class RoutineController {
                     "specialist: " + r.getSpecialist().getUsername() + " " +
                     "admin: " + r.getAdmin());
         }
-
         return routineDTOS;
     }
 
@@ -62,6 +61,22 @@ public class RoutineController {
     public String updateStatus( @RequestBody RoutineDTO routineDTO){
         log.info(" data entered: " + routineDTO);
         return routineService.updateStatus(routineDTO);
+    }
+
+    @GetMapping("/indexApproved")
+    public List<RoutineDTO> findApprovedRoutines(){
+        List<RoutineDTO> routineDTOS = routineService.findApprovedRoutines();
+        for(RoutineDTO r : routineDTOS){
+            log.info(" data fetched: " +
+                    "activity level: " + r.getActivityLevel() + " " +
+                    "exercises: " + r.getListOfPhysicalExercises() + " " +
+                    "food: " + r.getListOfFood() + " " +
+                    "description: " + r.getDescription() + " " +
+                    "status: " + r.getStatusRoutine() + " " +
+                    "specialist: " + r.getSpecialist().getUsername() + " " +
+                    "admin: " + r.getAdmin());
+        }
+        return routineDTOS;
     }
 
 }
