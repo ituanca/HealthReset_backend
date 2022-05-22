@@ -24,6 +24,10 @@ public class AdminService {
         this.adminRepository = adminRepository;
     }
 
+    /**
+     * Gets all the administrators from the database
+     * @return a list of all the administrators
+     */
     public List<Admin> findAll(){
         List<Admin> list = adminRepository.findAll();
         if(list.isEmpty()){
@@ -34,6 +38,11 @@ public class AdminService {
         return list;
     }
 
+    /**
+     * Gets the administrator with the specified id
+     * @param id the id I want the administrator that I am looking for to have
+     * @return either an admin object, or null in case the admin with the specified id does not exist in the database
+     */
     public Optional<Admin> findById(Integer id){
         Optional<Admin> admin = adminRepository.findById(id);
         if(admin.isEmpty()){
@@ -44,23 +53,34 @@ public class AdminService {
         return admin;
     }
 
+    /**
+     * Gets the administrator with the specified username
+     * @param name the name I want the administrator that I am looking for to have
+     * @return either an admin object, or null in case the admin with the specified name does not exist in the database
+     */
     public Optional<Admin> findByUsername(String name){
         Optional<Admin> admin = adminRepository.findByUsername(name);
         if(admin.isEmpty()){
-            log.warn("Admin:Service:findByUsername " + " Admin with username " + name + " was not found!");
+            log.warn(" Admin with username " + name + " was not found!");
         }else{
-            log.info("AdminService:findByUsername " + " Admin with username " + name + " was found!");
+            log.info(" Admin with username " + name + " was found!");
         }
         return adminRepository.findByUsername(name);
     }
 
+    /**
+     * Inserts the admin into the database after making the necessary validations of the entered data
+     * @param adminDTO the userDTO received from the frontend
+     * @return a string representing a message which communicates the type of the error if the entered data
+     * is not valid or the fact that the data is valid and the admin was inserted into the database
+     */
     public String signUp(UserDTO adminDTO){
         if(adminRepository.findByEmail(adminDTO.getEmail()).isPresent() ){
-            log.warn("AdminService:signUp " + " Email " + adminDTO.getEmail() + " already exists!");
+            log.warn(" Email " + adminDTO.getEmail() + " already exists!");
             return "email_exists";
         }
         if(adminRepository.findByUsername(adminDTO.getUsername()).isPresent() ){
-            log.warn("AdminService:signUp " + " Username " + adminDTO.getUsername() + " already exists!");
+            log.warn(" Username " + adminDTO.getUsername() + " already exists!");
             return "username_exists";
         }
 
@@ -77,6 +97,13 @@ public class AdminService {
         return "ok";
     }
 
+    /**
+     * Checks the introduced credentials and if they are correct, the admin will be allowed to enter his account
+     * @param username the username entered by the user
+     * @param password the password entered by the user
+     * @return a string which shows if the credentials are correct or not, case which happen when either the username
+     * does not exist or the password introduced does not match the password associated to the entered username
+     */
     public String login(String username, String password){
         Admin admin = adminRepository.findByUsername(username).orElse(null);
         if (admin==null) {

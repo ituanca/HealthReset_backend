@@ -18,6 +18,12 @@ public class PrimaryFoodService {
     @Autowired
     PrimaryFoodRepository primaryFoodRepository;
 
+    /**
+     * Checks if the entered data is valid and if this is true the food item is inserted into the database
+     * @param foodDTO the foodDTO object received form the frontend
+     * @return a string which communicates if the data is valid, in which case the food item is inserted into
+     * the database, or if the data is invalid and which one of the fields was improperly filled
+     */
     public String addPrimaryFood(PrimaryFoodDTO foodDTO) {
 
         if(!foodDTO.getName().matches("^[a-zA-Z0-9\\-\\s]+$")){
@@ -48,6 +54,10 @@ public class PrimaryFoodService {
         return "ok";
     }
 
+    /**
+     * Gets all the primary food items from the database
+     * @return a list of PrimaryFoodDTO that is sent to frontend
+     */
     public List<PrimaryFoodDTO> findAll(){
 
         List<PrimaryFood> listOfPrimaryFood = primaryFoodRepository.findAll();

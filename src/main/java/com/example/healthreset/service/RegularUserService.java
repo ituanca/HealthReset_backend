@@ -26,6 +26,12 @@ public class RegularUserService {
         this.regularUserRepository = regularUserRepository;
     }
 
+    /**
+     * Checks if the email and the username do not exist yet in the database and if the email is valid
+     * @param email the email that I want to validate and to check if it exists already in the database or not
+     * @param username the username that I want to validate and to check if it exists already in the database or not
+     * @return a string representing a message showing the state of this verification
+     */
     public String checkIfValid(String email, String username){
         if(regularUserRepository.findByEmail(email).isPresent() ){
             log.warn(" Email " + email + " already exists!");
@@ -44,6 +50,13 @@ public class RegularUserService {
         return "ok";
     }
 
+    /**
+     * Checks the introduced credentials and if they are correct, the regular user will be allowed to enter his account
+     * @param username the username entered by the user
+     * @param password the password entered by the user
+     * @return a string which shows if the credentials are correct or not, case which happen when either the username
+     * does not exist or the password introduced does not match the password associated to the entered username
+     */
     public String login(String username, String password){
         RegularUser regularUser = regularUserRepository.findByUsername(username).orElse(null);
         if (regularUser==null) {
@@ -59,6 +72,11 @@ public class RegularUserService {
         return "ok";
     }
 
+    /**
+     * Gets the profile associated to the specified user
+     * @param username the username of the regular user associated to the profile being sought
+     * @return a ProfileDTO object in case the profile was found or null otherwise
+     */
     public ProfileDTO findProfileByRegularUser(String username){
         RegularUser regularUser = regularUserRepository.findByUsername(username).orElse(null);
         if(regularUser!=null){

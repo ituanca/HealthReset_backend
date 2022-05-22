@@ -26,6 +26,12 @@ public class PhysicalExerciseService {
         this.typeOfExerciseRepository = typeOfExerciseRepository;
     }
 
+    /**
+     * Checks if the entered data is valid and if this is true the physical exercise is inserted into the database
+     * @param physicalExerciseDTO the DTO received from the frontend
+     * @return a string which communicates if the data is valid, in which case the physical exercise is inserted into
+     * the database, or if the data is invalid and which one of the fields was improperly filled
+     */
     public String addPhysicalExercise(PhysicalExerciseDTO physicalExerciseDTO) {
 
         if(!physicalExerciseDTO.getName().matches("^[a-zA-Z0-9\\-\\s]+$")){
@@ -55,6 +61,10 @@ public class PhysicalExerciseService {
         return "ok";
     }
 
+    /**
+     * Gets all the physical exercises from database
+     * @return a list of all the physical exercises which exist in the database
+     */
     public List<PhysicalExerciseDTO> findAll(){
         List<PhysicalExercise> physicalExercises = physicalExerciseRepository.findAll();
         List<PhysicalExerciseDTO> physicalExerciseDTOS = new ArrayList<>();

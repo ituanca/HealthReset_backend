@@ -37,11 +37,21 @@ public class RoutineService {
         this.statusRoutineRepository = statusRoutineRepository;
     }
 
+    /**
+     * Inserts the routine into the database, after checking if the name is valid
+     * @param routineDTO the DTO object received from the frontend
+     * @return a string showing the status of the request, which could be "ok" if everything works fine,
+     * "name_error" in case the name of the routine does not have a valid form or "description_error" if the
+     * introduced description is too long
+     */
     public String createRoutine(RoutineDTO routineDTO) {
 
         if(!routineDTO.getName().matches("^[a-zA-Z0-9\\-\\s]+$")){
             log.warn(" Name " + routineDTO.getName() + " is not valid!");
             return "name_error";
+        }else if(routineDTO.getDescription().length() > 250){
+            log.warn(" Description " + routineDTO.getDescription() + " with the length " + routineDTO.getDescription().length() + " is too long!");
+            return "description_error";
         }
 
         RoutineMapper routineMapper = new RoutineMapper();
@@ -119,6 +129,11 @@ public class RoutineService {
         return "ok";
     }
 
+    /**
+     * Checks if there exists a routine with the specified name
+     * @param name the name of the routine entered by the specialist and has to be checked
+     * @return a string which communicates if the name exists or not
+     */
     public String checkIfNameExists(String name){
         Optional<Routine> routine = routineRepository.findByName(name);
         if(routine.isEmpty()){
@@ -130,6 +145,10 @@ public class RoutineService {
         return "ok";
     }
 
+    /**
+     * Gets all the routines from the database
+     * @return a list of RoutineDTO objects which is sent to database
+     */
     public List<RoutineDTO> findAll(){
         List<Routine> routines = routineRepository.findAll();
         List<RoutineDTO> routineDTOS = new ArrayList<>();
@@ -141,6 +160,11 @@ public class RoutineService {
         return routineDTOS;
     }
 
+    /**
+     * Updates the status of the routine which, which can be approved or not by an admin
+     * @param routineDTO the DTO object sent from frontend
+     * @return a string showing if the routine was updated or not in the database
+     */
     public String updateStatus(RoutineDTO routineDTO){
 
         StatusRoutine statusRoutine = statusRoutineRepository.findByStatusRoutine(routineDTO.getStatusRoutine()).orElse(null);
@@ -156,6 +180,10 @@ public class RoutineService {
         return "not_updated";
     }
 
+    /**
+     * Gets all the approved routines from the database
+     * @return a list of RoutineDTO objects which is sent to frontend
+     */
     public List<RoutineDTO> findApprovedRoutines(){
         List<Routine> routines = routineRepository.findAll();
         List<RoutineDTO> routineDTOS = new ArrayList<>();

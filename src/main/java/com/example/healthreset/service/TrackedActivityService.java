@@ -37,6 +37,13 @@ public class TrackedActivityService {
         this.trackedFoodRepository = trackedFoodRepository;
     }
 
+    /**
+     * Checks if the introduced data is valid in which case the activity is created and added into the database
+     * @param trackedActivityDTO the DTO object sent from the frontend
+     * @return a string which shows if the introduced data is incorrect, case which happen when the specified
+     * number of steps is not a valid positive number, or if it is correct and the data was successfully saved
+     * into the database
+     */
     public String createActivity(TrackedActivityDTO trackedActivityDTO) {
         if(trackedActivityDTO.getNrOfSteps() < 0){
             log.warn(" Number of steps " + trackedActivityDTO.getNrOfSteps() + " is an invalid number!");

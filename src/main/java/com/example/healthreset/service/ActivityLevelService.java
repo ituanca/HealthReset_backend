@@ -20,6 +20,10 @@ public class ActivityLevelService {
         this.activityLevelRepository = activityLevelRepository;
     }
 
+    /**
+     * Gets all the activity levels from database
+     * @return a list of all the activity levels as DTOs
+     */
     public List<ActivityLevelDTO> findAll(){
         List<ActivityLevel> activityLevels = activityLevelRepository.findAll();
         List<ActivityLevelDTO> activityLevelDTO = new ArrayList<>();

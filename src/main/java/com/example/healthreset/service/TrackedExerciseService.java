@@ -29,6 +29,10 @@ public class TrackedExerciseService {
         this.typeOfExerciseRepository = typeOfExerciseRepository;
     }
 
+    /**
+     * Gets all the tracked exercises from the database
+     * @return a list of all the tracked exercises found in the database, as a list of DTO objects
+     */
     public List<TrackedExerciseDTO> findAll(){
         List<Exercise> exercises = exerciseRepository.findAll();
         List<TrackedExerciseDTO> trackedExercisesDTOS = new ArrayList<>();

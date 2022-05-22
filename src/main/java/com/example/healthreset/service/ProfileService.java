@@ -29,6 +29,12 @@ public class ProfileService {
         this.regularUserRepository = regularUserRepository;
     }
 
+    /**
+     * Calls a method to validate the data and if the result is true the profile is inserted into the database
+     * @param profileDTO the profileDTO object received form the frontend
+     * @return a string which communicates if the data is valid, in which case the profile is created,
+     * or if the data is invalid and which one of the fields was improperly filled
+     */
     public String createProfile(ProfileDTO profileDTO) {
         String activityLevelString = profileDTO.getActivityLevel();
         ActivityLevel activityLevel =
@@ -53,6 +59,12 @@ public class ProfileService {
         return result;
     }
 
+    /**
+     * Calls a method which validates the data sent from the frontend and if the result is true, the profile is updated
+     * @param profileDTO the profileDTO object received form the frontend
+     * @return a string which communicates if the data is valid, in which case the profile is updated in the database,
+     * or if the data is invalid and which one of the fields was improperly filled
+     */
     public String updateProfile(ProfileDTO profileDTO){
         String activityLevelString = profileDTO.getActivityLevel();
         ActivityLevel activityLevel =

@@ -25,6 +25,10 @@ public class TypeOfExerciseService {
         this.typeOfExerciseRepository = typeOfExerciseRepository;
     }
 
+    /**
+     * Gets all the types of exercises from the database
+     * @return a list of all the type exercises from the database as a list of DTO objects
+     */
     public List<TypeOfExerciseDTO> findAll(){
         List<TypeOfExercise> typesOfExercise = typeOfExerciseRepository.findAll();
         List<TypeOfExerciseDTO> typesOfExerciseDTO = new ArrayList<>();

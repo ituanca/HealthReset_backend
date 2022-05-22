@@ -21,6 +21,10 @@ public class MealOfTheDayService {
         this.mealOfTheDayRepository = mealOfTheDayRepository;
     }
 
+    /**
+     * Gets all the meals of the day from the database
+     * @return a list of all the meals of the day from database as DTOs
+     */
     public List<MealOfTheDayDTO> findAll(){
         List<MealOfTheDay> mealsOfTheDay = mealOfTheDayRepository.findAll();
         List<MealOfTheDayDTO> mealsOfTheDayDTO = new ArrayList<>();

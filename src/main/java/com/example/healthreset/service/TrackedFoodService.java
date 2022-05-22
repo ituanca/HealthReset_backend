@@ -24,6 +24,10 @@ public class TrackedFoodService {
         this.primaryFoodRepository = primaryFoodRepository;
     }
 
+    /**
+     * Gets all the tracked food items from the database
+     * @return a list of all the tracked food items found in the database, as a list of DTO objects
+     */
     public List<TrackedFoodDTO> findAll(){
         List<PrimaryFood> primaryFoodList = primaryFoodRepository.findAll();
         List<TrackedFoodDTO> trackedFoodDTOS = new ArrayList<>();
@@ -39,7 +43,6 @@ public class TrackedFoodService {
             trackedFood.setQuantity(primaryFood.getQuantity());
             trackedFoodDTOS.add(trackedFoodMapper.convertTrackedFoodToDTO(trackedFood));
         }
-        System.out.println("oij98uhy7g34uh2ij90ervf8uhr3u4");
         log.info(" Tracked food " + trackedFoodDTOS + " successfully fetched!");
         return trackedFoodDTOS;
     }
