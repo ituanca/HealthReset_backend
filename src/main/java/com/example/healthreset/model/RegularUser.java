@@ -31,4 +31,9 @@ public class RegularUser extends User{
 //    @OneToMany(mappedBy = "regularUser")
 //    private List<CustomizedFood> listOfCustomizedFood;
 
+    public RegularUser(String name, String email, String username, String password) {
+        super(email, username, password);
+        this.name = name;
+    }
+
 }

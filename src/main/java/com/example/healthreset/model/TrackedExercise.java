@@ -18,4 +18,11 @@ public class TrackedExercise extends Exercise {
     @JoinColumn(name = "idTrackedActivity")
     TrackedActivity trackedActivity;
 
+    public TrackedExercise(String name,
+                           Integer caloriesBurnedPerMinute,
+                           TypeOfExercise typeOfExercise,
+                           Integer timeOfExecution) {
+        super(name, caloriesBurnedPerMinute, typeOfExercise);
+        this.timeOfExecution = timeOfExecution;
+    }
 }

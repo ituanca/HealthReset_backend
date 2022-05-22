@@ -21,4 +21,9 @@ public class Specialist extends User{
     @OneToMany(mappedBy = "specialist")
     private List<Routine> routines;
 
+    public Specialist(String email, String username, String password, String name) {
+        super(email, username, password);
+        this.name = name;
+    }
+
 }

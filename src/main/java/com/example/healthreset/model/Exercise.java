@@ -27,4 +27,9 @@ public abstract class Exercise {
     @JoinColumn(name = "idTypeOfExercise")
     TypeOfExercise typeOfExercise;
 
+    public Exercise(String name, Integer caloriesBurnedPerMinute, TypeOfExercise typeOfExercise) {
+        this.name = name;
+        this.caloriesBurnedPerMinute = caloriesBurnedPerMinute;
+        this.typeOfExercise = typeOfExercise;
+    }
 }

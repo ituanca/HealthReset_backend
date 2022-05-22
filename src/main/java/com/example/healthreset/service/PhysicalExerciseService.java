@@ -68,14 +68,5 @@ public class PhysicalExerciseService {
         return physicalExerciseDTOS;
     }
 
-    public PhysicalExerciseDTO findByName(String name){
-        PhysicalExercise physicalExercise = physicalExerciseRepository.findByName(name).orElse(null);
-        PhysicalExerciseMapper physicalExerciseMapper = new PhysicalExerciseMapper();
-        if(physicalExercise !=null){
-            return physicalExerciseMapper.convertPhysicalExerciseToDTO(physicalExercise);
-        }
-        return null;
-    }
-
 
 }

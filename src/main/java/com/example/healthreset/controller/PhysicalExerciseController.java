@@ -33,10 +33,4 @@ public class PhysicalExerciseController {
         return physicalExerciseService.findAll();
     }
 
-    @GetMapping("/{id}")
-    public PhysicalExerciseDTO findByName(@PathVariable String name){
-        log.info(" id entered: " + name);
-        return physicalExerciseService.findByName(name);
-    }
-
 }

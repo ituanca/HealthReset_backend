@@ -27,9 +27,9 @@ public class AdminService {
     public List<Admin> findAll(){
         List<Admin> list = adminRepository.findAll();
         if(list.isEmpty()){
-            log.warn("AdminService:findAll " + " There were not found any administrators in the database!");
+            log.warn(" There were not found any administrators in the database!");
         }else{
-            log.info("AdminService:findAll " + " All existent admins were successfully fetched from database!");
+            log.info(" All existent admins were successfully fetched from database!");
         }
         return list;
     }

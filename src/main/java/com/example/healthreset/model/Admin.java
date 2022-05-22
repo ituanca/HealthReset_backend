@@ -20,4 +20,8 @@ public class Admin extends User{
     @OneToMany(mappedBy = "admin")
     List<Routine> routines;
 
+    public Admin(String email, String username, String password) {
+        super(email, username, password);
+    }
+
 }
